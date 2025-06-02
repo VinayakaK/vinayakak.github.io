@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickTools - AI Powered Online Tools</title>
+    <meta name="description" content="Free AI-powered online tools for converting, compressing, and managing files. Convert JPG to PDF, merge PDFs, generate QR codes and more.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        gradient: {
+                            start: '#4f46e5',
+                            end: '#a855f7',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(-45deg, #4f46e5, #a855f7, #0ea5e9, #a855f7);
+            background-size: 300% 300%;
+            animation: gradient 8s ease infinite;
+        }
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-link:hover {
+            color: #38bdf8;
+        }
+        .nav-link.active {
+            color: #0ea5e9;
+            border-bottom: 2px solid #0ea5e9;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">QuickTools</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link active text-gray-700 dark:text-gray-300 font-medium transition-colors">Home</a>
+                    <a href="#ai-tools" class="nav-link text-gray-700 dark:text-gray-300 font-medium transition-colors">AI Tools</a>
+                    <a href="#about" class="nav-link text-gray-700 dark:text-gray-300 font-medium transition-colors">About Us</a>
+                    <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 font-medium transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button class="md:hidden text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">AI-Powered Online Tools</h1>
+            <p class="text-xl md:text-2xl text-primary-100 mb-8 max-w-3xl mx-auto">
+                Convert, compress, and manage files with our powerful AI tools. Free, fast, and easy to use!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#ai-tools" class="px-6 py-3 bg-white text-primary-700 rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl">
+                    Explore Tools
+                </a>
+                <a href="#about" class="px-6 py-3 border-2 border-white text-white rounded-full font-bold hover:bg-white/10 transition-colors">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Tools Section -->
+    <section id="ai-tools" class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">AI-Powered Tools</h2>
+            
+            <!-- PDF Tools -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <i class="fas fa-file-pdf text-3xl text-red-500 mr-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">PDF Tools</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <a href="tools/jpg-to-pdf.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-red-50 dark:bg-red-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-file-pdf text-red-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">JPG to PDF</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Convert images to PDF documents with AI</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/merge-pdf.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-file-merge text-purple-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Merge PDF</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Combine multiple PDFs into one document</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/pdf-to-word.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-file-word text-blue-500 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">PDF to Word</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Convert PDFs to editable Word documents</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/text-to-pdf.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-file-alt text-yellow-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Text to PDF</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Convert plain text to formatted PDF</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image Tools -->
+            <div class="mb-16">
+                <div class="flex items-center mb-8">
+                    <i class="fas fa-image text-3xl text-blue-500 mr-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Image Tools</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <a href="tools/image-compressor.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-file-image text-blue-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Image Compressor</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Reduce image size without quality loss</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/image-resizer.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-green-50 dark:bg-green-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-expand text-green-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Image Resizer</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Resize images to any dimensions</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/png-to-jpg.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-exchange-alt text-pink-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">PNG to JPG</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Convert PNG images to JPG format</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/background-remover.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-magic text-indigo-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Background Remover</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Remove backgrounds automatically with AI</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Other Tools -->
+            <div>
+                <div class="flex items-center mb-8">
+                    <i class="fas fa-tools text-3xl text-indigo-500 mr-4"></i>
+                    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Other Tools</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <a href="tools/qr-code-generator.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-qrcode text-indigo-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">QR Code Generator</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Create customizable QR codes</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="tools/text-to-speech.html" class="tool-card group block rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                            <div class="w-14 h-14 rounded-lg bg-teal-50 dark:bg-teal-900/20 flex items-center justify-center mb-5 transition-transform duration-300">
+                                <i class="tool-icon fas fa-volume-up text-teal-400 text-2xl transition-transform duration-300"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-primary-600 transition-colors">Text to Speech</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Convert text to natural sounding audio</p>
+                            <div class="text-primary-500 font-medium flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                Use tool <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">About Us</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Our Team" 
+                             class="rounded-xl shadow-lg w-full h-auto">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Our Mission</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            At QuickTools, we believe in making powerful AI tools accessible to everyone. Our mission is to simplify complex tasks through intuitive interfaces powered by cutting-edge artificial intelligence.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Founded in 2023, we've helped millions of users convert, compress, and manage their files with ease. Our tools are completely free to use with no hidden costs.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm">
+                        <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-bolt text-primary-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Fast Processing</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Our AI-powered tools process files in seconds, saving you valuable time.</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm">
+                        <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-lock text-primary-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Secure & Private</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Your files are processed securely and never stored on our servers.</p>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm">
+                        <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-infinity text-primary-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">No Limits</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Use our tools as much as you need - no restrictions or paywalls.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-white mb-12">Contact Us</h2>
+            <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-primary-500 p-8 text-white">
+                        <h3 class="text-2xl font-semibold mb-4">Get in Touch</h3>
+                        <p class="mb-6 text-primary-100">Have questions or feedback? We'd love to hear from you!</p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-4 text-primary-200"></i>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-primary-100">support@quicktools.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-4 text-primary-200"></i>
+                                <div>
+                                    <h4 class="font-medium">Address</h4>
+                                    <p class="text-primary-100">123 Tech Street, San Francisco, CA 94107</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt mt-1 mr-4 text-primary-200"></i>
+                                <div>
+                                    <h4 class="font-medium">Phone</h4>
+                                    <p class="text-primary-100">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 dark:text-gray-300 mb-2">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold text-white mb-2">QuickTools</h2>
+                    <p>Your daily AI-powered tools for productivity</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">FAQ</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center">
+                <p>&copy; <span id="year"></span> QuickTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            
+            if (html.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('color-theme') === 'dark' || 
+            (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Navigation active link
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
