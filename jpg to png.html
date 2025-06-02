@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free JPG to PDF Converter Online | Convert Images to PDF in Browser</title>
+    <meta name="description" content="Convert JPG to PDF instantly with our free online tool. No software download required - works entirely in your browser. Merge multiple images into a single PDF document with high quality.">
+    <meta name="keywords" content="JPG to PDF, free PDF converter, image to PDF, online PDF creator, convert JPG to PDF, no download, browser-based PDF tool">
+    <meta name="author" content="QuickTools">
+    <meta property="og:title" content="Free JPG to PDF Converter Online">
+    <meta property="og:description" content="Convert JPG images to PDF documents instantly in your browser - no software installation needed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quicktools.com/jpg-to-pdf">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></script>
+    <style>
+        .dropzone {
+            border: 2px dashed #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .dropzone.active {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        .pdf-preview {
+            height: 500px;
+            border: 1px solid #e5e7eb;
+        }
+        @media (max-width: 768px) {
+            .pdf-preview {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="text-xl font-bold text-blue-600">QuickTools</a>
+                <div class="flex space-x-4">
+                    <a href="/tools" class="text-gray-600 hover:text-blue-600">All Tools</a>
+                    <a href="/about" class="text-gray-600 hover:text-blue-600">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Free JPG to PDF Converter</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Convert your JPG images to PDF documents instantly in your browser. No software download required - 100% free and secure.</p>
+        </section>
+
+        <!-- Converter Tool -->
+        <section class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800">JPG to PDF Converter</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Input Section -->
+                    <div>
+                        <div id="dropzone" class="dropzone rounded-lg p-8 text-center cursor-pointer mb-6">
+                            <input type="file" id="fileInput" class="hidden" accept="image/jpeg,image/png" multiple>
+                            <div class="flex flex-col items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                <h3 class="text-lg font-medium text-gray-700 mb-2">Drag & Drop JPG Images Here</h3>
+                                <p class="text-gray-500 mb-4">or click to browse files</p>
+                                <button id="selectFilesBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Select Images</button>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="mergeCheckbox" class="rounded text-blue-600" checked>
+                                    <span class="ml-2 text-gray-700">Merge all images into a single PDF</span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="compressCheckbox" class="rounded text-blue-600">
+                                    <span class="ml-2 text-gray-700">Compress PDF to reduce file size</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Selected Files -->
+                        <div id="fileList" class="border border-gray-200 rounded-lg p-4 max-h-60 overflow-y-auto hidden">
+                            <h4 class="font-medium text-gray-700 mb-2">Selected Files:</h4>
+                            <ul id="selectedFilesList" class="space-y-2"></ul>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap gap-3 mt-6">
+                            <button id="convertBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Convert to PDF
+                            </button>
+                            <button id="clearBtn" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors hidden">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Section -->
+                    <div>
+                        <div class="mb-4">
+                            <h3 class="text-lg font-medium text-gray-700 mb-2">PDF Preview</h3>
+                            <div class="pdf-preview bg-gray-100 rounded-lg flex items-center justify-center">
+                                <p id="previewPlaceholder" class="text-gray-500">Your PDF will appear here after conversion</p>
+                                <iframe id="pdfPreview" class="w-full h-full hidden"></iframe>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="downloadBtn" class="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors hidden">
+                                Download PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800">How to Convert JPG to PDF</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-blue-600 font-bold">1</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Upload JPG Images</h3>
+                        <p class="text-gray-500">Select or drag & drop your JPG files into the converter</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-blue-600 font-bold">2</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Convert to PDF</h3>
+                        <p class="text-gray-500">Click the convert button to process your images</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-blue-600 font-bold">3</span>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Download PDF</h3>
+                        <p class="text-gray-500">Save your new PDF file to your device</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="bg-white rounded-xl shadow-md overflow-hidden mb-12">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-800">Frequently Asked Questions</h2>
+            </div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Is this JPG to PDF converter really free?</h3>
+                        <p class="text-gray-600">Yes, our JPG to PDF converter is completely free to use with no hidden charges. You can convert as many images as you need without any limitations.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Do my images get stored on your servers?</h3>
+                        <p class="text-gray-600">No, all conversion happens directly in your browser. We never upload your files to any server, ensuring complete privacy and security.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Can I convert multiple JPGs to a single PDF?</h3>
+                        <p class="text-gray-600">Yes, simply select multiple images or drag them all at once. The converter will merge them into one PDF document in the order they were selected.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">What image formats are supported?</h3>
+                        <p class="text-gray-600">Our tool supports JPG, JPEG, and PNG formats. The output will always be a high-quality PDF document.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-700 mb-2">Is there a limit to file size or number of images?</h3>
+                        <p class="text-gray-600">The limit depends on your device's memory, but typically you can convert up to 50 images or 100MB total at once. For larger batches, we recommend splitting them.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Tools -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">More Free Online Tools</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="/pdf-to-jpg" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">PDF to JPG</h3>
+                    <p class="text-gray-500">Convert PDF pages to JPG images</p>
+                </a>
+                <a href="/merge-pdf" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Merge PDF</h3>
+                    <p class="text-gray-500">Combine multiple PDFs into one</p>
+                </a>
+                <a href="/compress-pdf" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Compress PDF</h3>
+                    <p class="text-gray-500">Reduce PDF file size</p>
+                </a>
+                <a href="/image-resizer" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2">Image Resizer</h3>
+                    <p class="text-gray-500">Resize images online</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold text-white mb-2">QuickTools</h2>
+                    <p>Free online tools for your daily needs</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="/contact" class="hover:text-white transition-colors">Contact Us</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center">
+                <p>&copy; <span id="currentYear"></span> QuickTools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+
+        // DOM elements
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const selectFilesBtn = document.getElementById('selectFilesBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const fileList = document.getElementById('fileList');
+        const selectedFilesList = document.getElementById('selectedFilesList');
+        const previewPlaceholder = document.getElementById('previewPlaceholder');
+        const pdfPreview = document.getElementById('pdfPreview');
+        const mergeCheckbox = document.getElementById('mergeCheckbox');
+        const compressCheckbox = document.getElementById('compressCheckbox');
+
+        // Store files and PDF
+        let files = [];
+        let pdfBlob = null;
+
+        // Event listeners
+        selectFilesBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+        convertBtn.addEventListener('click', convertToPDF);
+        clearBtn.addEventListener('click', clearAll);
+        downloadBtn.addEventListener('click', downloadPDF);
+
+        // Drag and drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            dropzone.classList.add('active');
+        }
+
+        function unhighlight() {
+            dropzone.classList.remove('active');
+        }
+
+        dropzone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const newFiles = dt.files;
+            handleFiles(newFiles);
+        }
+
+        function handleFileSelect(e) {
+            const newFiles = e.target.files;
+            handleFiles(newFiles);
+        }
+
+        function handleFiles(newFiles) {
+            // Filter only image files
+            const imageFiles = Array.from(newFiles).filter(file => 
+                file.type === 'image/jpeg' || file.type === 'image/png'
+            );
+
+            if (imageFiles.length === 0) {
+                alert('Please select only JPG or PNG files.');
+                return;
+            }
+
+            files = [...files, ...imageFiles];
+            updateFileList();
+            updateUI();
+        }
+
+        function updateFileList() {
+            selectedFilesList.innerHTML = '';
+            
+            files.forEach((file, index) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'flex items-center justify-between';
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'flex items-center truncate';
+                
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-image text-blue-500 mr-2';
+                
+                const fileName = document.createElement('span');
+                fileName.className = 'truncate';
+                fileName.textContent = file.name;
+                
+                const fileSize = document.createElement('span');
+                fileSize.className = 'text-gray-500 text-sm ml-2';
+                fileSize.textContent = formatFileSize(file.size);
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'text-red-500 hover:text-red-700 ml-2';
+                removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                removeBtn.addEventListener('click', () => removeFile(index));
+                
+                fileInfo.appendChild(icon);
+                fileInfo.appendChild(fileName);
+                fileInfo.appendChild(fileSize);
+                
+                listItem.appendChild(fileInfo);
+                listItem.appendChild(removeBtn);
+                
+                selectedFilesList.appendChild(listItem);
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i];
+        }
+
+        function removeFile(index) {
+            files.splice(index, 1);
+            updateFileList();
+            updateUI();
+        }
+
+        function updateUI() {
+            if (files.length > 0) {
+                fileList.classList.remove('hidden');
+                convertBtn.disabled = false;
+                clearBtn.classList.remove('hidden');
+            } else {
+                fileList.classList.add('hidden');
+                convertBtn.disabled = true;
+                clearBtn.classList.add('hidden');
+            }
+            
+            // Hide download button if no PDF generated
+            if (!pdfBlob) {
+                downloadBtn.classList.add('hidden');
+                pdfPreview.classList.add('hidden');
+                previewPlaceholder.classList.remove('hidden');
+            }
+        }
+
+        function clearAll() {
+            files = [];
+            pdfBlob = null;
+            fileInput.value = '';
+            updateFileList();
+            updateUI();
+        }
+
+        async function convertToPDF() {
+            if (files.length === 0) return;
+            
+            convertBtn.disabled = true;
+            convertBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Converting...';
+            
+            try {
+                const shouldMerge = mergeCheckbox.checked;
+                const shouldCompress = compressCheckbox.checked;
+                
+                if (shouldMerge) {
+                    // Create a single PDF with all images
+                    const pdf = new jsPDF();
+                    let position = 0;
+                    
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const imgData = await readFileAsDataURL(file);
+                        
+                        // Add image to PDF
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        const img = await loadImage(imgData);
+                        const imgProps = pdf.getImageProperties(imgData);
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                        
+                        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+                        
+                        // For subsequent pages, reset position
+                        position = 0;
+                    }
+                    
+                    // Generate PDF blob
+                    pdfBlob = pdf.output('blob');
+                } else {
+                    // Create individual PDFs for each image (in this case, we'll just do the first one)
+                    const pdf = new jsPDF();
+                    const imgData = await readFileAsDataURL(files[0]);
+                    const img = await loadImage(imgData);
+                    const imgProps = pdf.getImageProperties(imgData);
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                    
+                    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    pdfBlob = pdf.output('blob');
+                }
+                
+                // Show preview
+                const pdfUrl = URL.createObjectURL(pdfBlob);
+                pdfPreview.src = pdfUrl;
+                pdfPreview.classList.remove('hidden');
+                previewPlaceholder.classList.add('hidden');
+                
+                // Show download button
+                downloadBtn.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Conversion error:', error);
+                alert('An error occurred during conversion. Please try again.');
+            } finally {
+                convertBtn.disabled = false;
+                convertBtn.textContent = 'Convert to PDF';
+            }
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        function downloadPDF() {
+            if (!pdfBlob) return;
+            
+            const url = URL.createObjectURL(pdfBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
